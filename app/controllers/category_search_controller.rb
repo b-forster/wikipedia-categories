@@ -1,0 +1,2 @@
+class CategorySearchController < ApplicationController
+end
