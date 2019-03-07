@@ -1,3 +1,19 @@
 // Place all the styles related to the CategorySearch controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  font-family: Helvetica;
+  color: #333;
+  text-align: center;
+}
+
+input {
+  border-radius: 5px;
+}
+
+#search-form-button {
+  border: none;
+  background-color: steelblue;
+  color: white;
+}
