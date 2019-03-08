@@ -22,15 +22,16 @@ class CategorySearchController < ApplicationController
 
     category_members.each do |article|
       article_url = "https://en.wikipedia.org?curid=#{article['pageid']}"
-      doc = Nokogiri::HTML(open(article_url))
+
+      doc = Nokogiri::HTML(open(article_url)).xpath("//text()").to_s.strip.gsub(/\W/," ")
       score = TextStat.flesch_reading_ease(doc)
 
       article["readability"] = score
     end
 
-    p category_members.sort!("score")
+    p sorted_articles = category_members.sort_by!{|article| article["readability"]}
 
-    render partial: "search_results", locals: {category_members: category_members}
+    render partial: "search_results", locals: {category_members: sorted_articles}
   end
 
 
