@@ -18,6 +18,8 @@ class CategorySearchController < ApplicationController
 
     response = http.request(request)
     category_members = JSON.parse(response.read_body)['query']['categorymembers']
+
+    render partial: "search_results", locals: {category_members: category_members}
   end
 
 
