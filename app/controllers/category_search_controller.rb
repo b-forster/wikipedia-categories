@@ -1,4 +1,5 @@
 require 'uri'
+require 'open-uri'
 require 'net/http'
 
 class CategorySearchController < ApplicationController
@@ -18,6 +19,17 @@ class CategorySearchController < ApplicationController
 
     response = http.request(request)
     category_members = JSON.parse(response.read_body)['query']['categorymembers']
+
+    category_members.each do |article|
+      article_url = "https://en.wikipedia.org?curid=#{article['pageid']}"
+      doc = Nokogiri::HTML(open(article_url))
+
+      paragraph = doc.css('p', 'article', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a').map(&:text)
+      score = Odyssey.flesch_kincaid_re(para.join('. '), false)
+      article["readability"] = score
+    end
+
+    p category_members
 
     render partial: "search_results", locals: {category_members: category_members}
   end
