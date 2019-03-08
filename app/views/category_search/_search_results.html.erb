@@ -1,5 +1,5 @@
 <ul>
   <% category_members.each do |article| %>
-    <li><a href="https://en.wikipedia.org/?curid=<%= article['pageid'] %>"><%= article['title'] %></a></li>
+    <li><a href="https://en.wikipedia.org/?curid=<%= article['pageid'] %>"><%= article['title'] %></a> - <%= article['readability'] %></li>
   <% end %>
 </ul>
